@@ -7,50 +7,31 @@ public class TreeDrawerTest {
 	public static void main(String args[]) {
 		TreeDrawerTest treeDrawerTest = new TreeDrawerTest();
 		treeDrawerTest.test1();
+		treeDrawerTest.test2();
 	}
 
 	public void test1() {
-		Tree n00 = new Tree(1);
-		Tree n10 = new Tree(2);
-		Tree n11 = new Tree(3);
-		Tree n20 = new Tree(4);
-		Tree n21 = new Tree(5);
-		Tree n22 = new Tree(6);
-		Tree n23 = new Tree(7);
-
-		n00.left = n10;
-		n00.right = n11;
-
-		n10.left = n20;
-		n10.right = n21;
-
-		n11.left = n22;
-		n11.right = n23;
-
-		Visualizer.draw(n00);
-
+		Tree node = makeTree(1, 127);
+		Visualizer.draw(node);
 	}
 
 	public void test2() {
-		Tree n00 = new Tree(1);
-		Tree n10 = new Tree(2);
-		Tree n11 = new Tree(3);
-		Tree n20 = new Tree(4);
-		Tree n21 = new Tree(5);
-		Tree n22 = new Tree(6);
-		Tree n23 = new Tree(7);
+		Tree node = makeTree(1, 127);
+		node.left.left.left = null;
+		node.left.left.right.right.left = null;
+		node.left.left.right.right.right = null;
+		Visualizer.draw(node);
+	}
 
-		n00.left = n10;
-		n00.right = n11;
-
-		n10.left = n20;
-		n10.right = n21;
-
-		n11.left = n22;
-		n11.right = n23;
-
-		Visualizer.draw(n00);
-
+	private Tree makeTree(int s, int e) {
+		if (s > e) {
+			return null;
+		}
+		int m = s + (e - s) / 2;
+		Tree node = new Tree(m);
+		node.left = makeTree(s, m - 1);
+		node.right = makeTree(m + 1, e);
+		return node;
 	}
 
 	public class Tree implements DrawableBinaryTree {

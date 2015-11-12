@@ -1,6 +1,6 @@
 package vds.binarytree;
 
-import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -9,25 +9,25 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import vds.interfaces.DrawableBinaryTree;
-import vds.utils.TreeUtils;
 import vds.utils.GraphicUtils;
+import vds.utils.Theme;
+import vds.utils.TreeUtils;
 import vds.utils.Utils;
 
 public class PanelTree extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private DrawableBinaryTree dt;
-	private int maxSizeX;
-	private int maxSizeY;
+	private DrawableBinaryTree dbt;
 	private int nodeRadius;
 
 	private List<List<DrawableBinaryTree>> levelOrder;
 	private List<List<Point>> grid;
 
-	public PanelTree(DrawableBinaryTree dt) {
+	public PanelTree(DrawableBinaryTree dbt) {
 		super();
-		this.dt = dt;
+		this.dbt = dbt;
+		this.setBackground(Theme.Panel.panel_bg);
 		setTreeParameters();
 	}
 
@@ -35,31 +35,28 @@ public class PanelTree extends JPanel {
 		setTreeParameters();
 	}
 	
-	public int getMaxSizeX() {
-		return maxSizeX;
-	}
-
-	public int getMaxSizeY() {
-		return maxSizeY;
-	}
-
 	/*************************************************************
 	 * Methods :: Internal
 	 *************************************************************/
 
 	private void setTreeParameters() {
-		maxSizeX = 800;
-		maxSizeY = 600;
 		nodeRadius = 25;
-		levelOrder = Utils.levelOrder(dt);
-		grid = TreeUtils.getTreeGrid(levelOrder.size(), maxSizeX, 2 * 2 * nodeRadius);
+		levelOrder = Utils.levelOrder(dbt);
+		Utils.displayLevelOrder(levelOrder);
+		int levelCount = levelOrder.size();
+		int maxNodeCount = Utils.pow2(levelCount-1);
+		int verticalDisplayGap = 2 * 2 * nodeRadius;
+		grid = TreeUtils.getTreeGrid(levelCount, 2*nodeRadius, verticalDisplayGap);
+		int sizeX = maxNodeCount * (nodeRadius * 2 * 2);
+		int sizeY = levelCount * verticalDisplayGap;
+		this.setPreferredSize(new Dimension(sizeX, sizeY));
 	}
 
 	@Override
 	protected void paintComponent(Graphics graphics) {
 		super.paintComponent(graphics);
 		Graphics2D g = (Graphics2D) graphics;
-		g.setPaint(Color.blue);
+		g.setPaint(Theme.Panel.node);
 		drawTree(g, this.levelOrder, this.grid);
 	}
 

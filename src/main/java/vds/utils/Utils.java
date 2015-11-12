@@ -1,7 +1,9 @@
 package vds.utils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import vds.interfaces.DrawableBinaryTree;
 
@@ -16,16 +18,21 @@ public class Utils {
 	}
 
 	private static void levelOrder(List<DrawableBinaryTree> nodeList, List<List<DrawableBinaryTree>> results) {
-		if (nodeList.isEmpty()) {
+		Set<DrawableBinaryTree> set = new HashSet<DrawableBinaryTree>(nodeList);
+		if (set.isEmpty() || (set.size() == 1 && set.contains(null))) {
 			return;
 		}
 		List<DrawableBinaryTree> result = new ArrayList<>();
 		List<DrawableBinaryTree> nextLevelNodes = new ArrayList<DrawableBinaryTree>();
 		for (DrawableBinaryTree node : nodeList) {
+			result.add(node);
 			if (node != null) {
-				result.add(node);
-				Utils.addToListIfNotNull(nextLevelNodes, node.getLeftChild());
-				Utils.addToListIfNotNull(nextLevelNodes, node.getRightChild());
+				nextLevelNodes.add(node.getLeftChild());
+				nextLevelNodes.add(node.getRightChild());
+			}
+			else{
+				nextLevelNodes.add(null);
+				nextLevelNodes.add(null);
 			}
 		}
 		results.add(result);

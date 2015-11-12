@@ -6,13 +6,12 @@ import java.util.List;
 
 public class TreeUtils {
 
-	public static List<List<Point>> getTreeGrid(int levelCount, int maxHorixontalSpan, int levelDisplayGap) {
+	public static List<List<Point>> getTreeGrid(int levelCount, int minHorizontalDisplayGap, int verticalDisplayGap) {
 
 		List<List<Point>> grid = new ArrayList<>();
 		List<Point> gridRow = new ArrayList<>();
 
-		int leafCount = Utils.pow2(levelCount - 1);
-		int baseStep = maxHorixontalSpan / (leafCount);
+		int baseStep = minHorizontalDisplayGap;
 		int x = 0, y = 0, s = 0;
 		int levelNodeCount = 0;
 		for (int level = 1; level <= levelCount; level++) {
@@ -25,7 +24,7 @@ public class TreeUtils {
 				x += s;
 			}
 			grid.add(gridRow);
-			y += levelDisplayGap;
+			y += verticalDisplayGap;
 		}
 		return grid;
 	}

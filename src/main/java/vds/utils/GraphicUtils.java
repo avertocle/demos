@@ -13,7 +13,8 @@ public class GraphicUtils {
 		Point center = new Point(p.x + radius, p.y + radius);
 		int string_x = center.x - margin - (margin * (data.length() - 1));
 		int string_y = center.y + 2 * margin;
-		Font stringFont = new Font(g.getFont().getName(), Font.PLAIN, radius);
+		int stringFontSize = (radius - ((data.length() - 1) * margin));
+		Font stringFont = new Font(g.getFont().getName(), Font.PLAIN, stringFontSize);
 		g.setFont(stringFont);
 		g.drawString(data, string_x, string_y);
 	}

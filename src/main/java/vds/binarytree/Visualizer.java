@@ -3,16 +3,17 @@ package vds.binarytree;
 import javax.swing.JFrame;
 
 import vds.interfaces.DrawableBinaryTree;
+import vds.utils.SystemUtils;
 
 public class Visualizer {
 
-	public static void draw(DrawableBinaryTree dt) {
+	public static void draw(DrawableBinaryTree dbt) {
 
 		JFrame frame = new JFrame();
-		PanelTree panelTree = new PanelTree(dt);
-		frame.getContentPane().add(panelTree);
+		PanelMain panelMain = new PanelMain(dbt);
+		frame.getContentPane().add(panelMain);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setSize(panelTree.getMaxSizeX(), panelTree.getMaxSizeY());
+		frame.setSize(SystemUtils.getScreenWidth(), SystemUtils.getScreenHeight());
 		frame.setVisible(true);
 	}
 
