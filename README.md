@@ -2,7 +2,7 @@
 
 Creating Java-Swing based visual representation for various data structures
 
-### How do I get set up? ###
+### How do I use it ? ###
 
 1. Make as a maven project or include whole package in your source.
     1. Use "mvn clean install" to make a jar file in target folder.
