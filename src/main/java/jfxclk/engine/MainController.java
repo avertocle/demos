@@ -7,17 +7,20 @@ import java.util.function.Consumer;
 import javafx.application.Platform;
 import jfxclk.engine.model.ModelResponse;
 import jfxclk.engine.view.MainScene;
+import jfxclk.engine.view.StageManager;
 import jfxclk.engine.view.UserSettings;
 
 public class MainController extends Thread {
 
 	private EventGenerator eventGenerator;
 	private MainScene mainScene;
+	private StageManager primaryStageManager;
 
 	private boolean runForever = true;
 
-	public MainController(MainScene mainScene) {
+	public MainController(MainScene mainScene, StageManager primaryStageManager) {
 		this.mainScene = mainScene;
+		this.primaryStageManager = primaryStageManager;
 		eventGenerator = new EventGenerator();
 	}
 
@@ -55,9 +58,16 @@ public class MainController extends Thread {
 				runOnUIThread(mainScene::update, map);
 				break;
 			case CLOCK_ADDED:
-				runOnUIThread(mainScene::registerLabel, (Integer)event.getData());
+				runOnUIThread(mainScene::registerLabel, (Integer) event.getData());
+				break;
+			case SHOW_GUI:
+				runOnUIThread(primaryStageManager::show);
 				break;
 		}
+	}
+
+	private <T> void runOnUIThread(Runnable runnable) {
+		Platform.runLater(runnable);
 	}
 
 	private <T> void runOnUIThread(Consumer<T> consumer, T consumable) {

@@ -4,8 +4,9 @@ public class UserSettings {
 
 	/* TODO :: make these final and load from file */
 
-	public int refreshIntervalMilliSeconds = 500;
+	public int refreshIntervalMilliSeconds = 60*1000;
 	public String DEFAULT_CLOCK_NAME = "Clock#1";
+	public String DEFAULT_TIME_FORMAT = "HH:mm";
 	public Stage stage;
 
 	public class Stage {
