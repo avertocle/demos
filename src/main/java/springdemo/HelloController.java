@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class HelloController {
 	
 	@RequestMapping("/hello")
-	@ResponseBody
-	public HelloModel hello(){
+	public @ResponseBody HelloModel hello(){
 		HelloModel helloModel = new HelloModel();
 		helloModel.setId(1);
-		helloModel.setName("Hello, 1");
+		helloModel.setName("Hello");
 		return helloModel;
 	}
 
