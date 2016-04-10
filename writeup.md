@@ -66,7 +66,7 @@ We start by adding the basic spring-framework-dependency to our pom.xml. version
 + REF_1 : http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#dependency-management
 + REF_2 : http://spring.io/blog/2009/12/02/obtaining-spring-3-artifacts-with-maven/
 
-#### Overriding WebApplicationInitializer
+##### Overriding WebApplicationInitializer
 
 Lets make our spring configuration fully annotation based .
 
@@ -90,7 +90,7 @@ Lets make our spring configuration fully annotation based .
 + REF_1 :: http://kielczewski.eu/2013/11/spring-mvc-without-web-xml-using-webapplicationinitializer/
 
 
-#### Creating a WebMvcConfig file 
+##### Creating a WebMvcConfig file 
 
 + Create a class where we'll specify any configuration thats needed
 + Place component scan annotation to tell spring which packages to scan.
@@ -105,7 +105,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 ```	
 
 
-#### Creating controllers-services
+##### Creating controllers-services
 
 + Create a simple controller marked with @Controller
 + Create a controller method (use "@RequestMapping" and "@ResponseBody") and let it return a simple string.
@@ -126,7 +126,7 @@ public class HelloController {
 + Run and test. It should work.
 
 
-#### Adding Response Converter
+##### Adding Response Converter
 
 + Create a simple Model object marked with @Component
 + Modify the controller method and let it return the above model object
@@ -170,3 +170,4 @@ public class HelloController {
 
 ##Enter JPA/Hibernate
 
+In progress
