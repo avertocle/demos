@@ -19,6 +19,7 @@ public class MainScene extends Scene {
 	public MainScene(Pane pane, Dimension size) {
 		super(pane, size.getWidth(), size.getHeight());
 		this.pane = pane;
+		pane.setStyle(UserSettings.gi().STYLE_SCENE);
 		makeElements();
 		make();
 	}

@@ -8,11 +8,14 @@ public class UserSettings {
 	public String DEFAULT_CLOCK_NAME = "Clock#1";
 	public String DEFAULT_TIME_FORMAT = "HH:mm";
 	public Stage stage;
-
+	
+	public String STYLE_LABEL = "-fx-background-color: #001B6B;-fx-text-fill: #9E0028;";
+	public String STYLE_SCENE = "-fx-background-color: #001B6B;";
+	
 	public class Stage {
 		public String STAGE_TITLE = "Shitty Clock";
-		public int STAGE_WIDTH = 400;
-		public int STAGE_HIEGHT = 200;
+		public int STAGE_WIDTH = 1000;
+		public int STAGE_HIEGHT = 600;
 	}
 
 	/********************************************************************************

@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import jfxclk.engine.view.MainScene;
 import jfxclk.engine.view.StageManager;
@@ -50,12 +51,14 @@ public class Main extends Application {
 		Platform.setImplicitExit(false);
 		primaryStage.setTitle(UserSettings.gi().stage.STAGE_TITLE);
 		primaryStage.setScene(mainScene);
+		primaryStage.initStyle(StageStyle.UTILITY);
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent event) {
 				primaryStage.hide();
 			}
 		});
+		primaryStage.setAlwaysOnTop(true);
 	}
 
 	private void initializeTrayIcon(Stage primaryStage) {
