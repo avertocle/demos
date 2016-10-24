@@ -1,5 +1,7 @@
 package jfxclk.engine;
 
+import java.awt.Desktop;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -61,7 +63,16 @@ public class MainController extends Thread {
 				runOnUIThread(mainScene::registerLabel, (Integer) event.getData());
 				break;
 			case SHOW_GUI:
+				int data = ((ModelEvent<Integer>)event).getData();
 				runOnUIThread(primaryStageManager::show);
+				break;
+			case LOG_OFF:
+				System.out.println("LOGOFF");
+				//logoff();
+				break;
+			case SHUT_DOWN:
+				System.out.println("SHUTDOWN");
+				//shutdown();
 				break;
 		}
 	}
@@ -77,7 +88,7 @@ public class MainController extends Thread {
 
 	private void sleepNowOrTerminate() {
 		try {
-			sleep(UserSettings.gi().refreshIntervalMilliSeconds);
+			sleep(UserSettings.gi().REFRESH_INTERVAL_MILLI);
 		}
 		catch (InterruptedException e) {
 			runForever = false;
@@ -93,6 +104,26 @@ public class MainController extends Thread {
 		parseEventAndUpdateGUI(me);
 		ModelEvent<Integer> me2 = eventGenerator.registerClock(UserSettings.gi().DEFAULT_CLOCK_NAME);
 		parseEventAndUpdateGUI(me2);
+	}
+	
+	private void logoff(){
+		String shutdownCmd = "shutdown -l -t 30";
+		try {
+			Process child = Runtime.getRuntime().exec(shutdownCmd);
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void shutdown(){
+			String shutdownCmd = "shutdown -s -t 30";
+			try {
+				Process child = Runtime.getRuntime().exec(shutdownCmd);
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
 
 }

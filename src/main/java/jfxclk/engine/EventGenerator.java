@@ -10,13 +10,15 @@ import java.util.logging.Logger;
 
 import jfxclk.engine.model.Clock;
 import jfxclk.engine.model.ModelResponse;
+import jfxclk.engine.view.UserSettings;
 
 public class EventGenerator {
 
+	@SuppressWarnings("unused")
 	private static Logger logger = Logger.getLogger(EventGenerator.class.getName());
 
 	public enum EventType {
-		UPDATE_ALL_TIMES, CLOCK_ADDED, SHOW_GUI
+		UPDATE_ALL_TIMES, CLOCK_ADDED, SHOW_GUI, LOG_OFF, SHUT_DOWN
 	};
 
 	private Map<Integer, Clock> mapClockIdToClock;
@@ -40,13 +42,35 @@ public class EventGenerator {
 
 	private List<ModelEvent<?>> getScheduledEvents() {
 		List<ModelEvent<?>> modelEvents = new ArrayList<>();
+		UserSettings us = UserSettings.gi();
 		Calendar calendar = Calendar.getInstance();
 		int hour = calendar.get(Calendar.HOUR_OF_DAY);
 		int minute = calendar.get(Calendar.MINUTE);
-		if (hour >= 1 && hour < 6 && (minute % 5) == 0) {
-			modelEvents.add(new ModelEvent<Integer>(EventType.SHOW_GUI, 0));
+		int[] currTime = { hour, minute };
+		if (isGreaterEqual(currTime, us.START_TIME) && isGreaterEqual(us.END_TIME, currTime)
+				&& minute % us.SNOOZE_TIME_MIN == 0) {
+			if (isGreaterEqual(currTime, us.SHUTDOWN_TIME)) {
+				modelEvents.add(new ModelEvent<Integer>(EventType.SHUT_DOWN, 0));
+			}
+			else if (isEqual(currTime, us.LOGOFF_TIME)) {
+				modelEvents.add(new ModelEvent<Integer>(EventType.LOG_OFF, 0));
+			}
+			else if (isGreaterEqual(currTime, us.WARNING_TIME)) {
+				modelEvents.add(new ModelEvent<Integer>(EventType.SHOW_GUI, 1));
+			}
+			else {
+				modelEvents.add(new ModelEvent<Integer>(EventType.SHOW_GUI, 0));
+			}
 		}
 		return modelEvents;
+	}
+
+	private boolean isGreaterEqual(int[] arg1, int[] arg2) {
+		return ((arg1[0] * 1000 + arg1[1]) > (arg2[0] * 1000 + arg2[1]));
+	}
+
+	private boolean isEqual(int[] arg1, int[] arg2) {
+		return ((arg1[0] * 1000 + arg1[1]) == (arg2[0] * 1000 + arg2[1]));
 	}
 
 	private List<ModelEvent<?>> getUpdateTimeEvent() {
