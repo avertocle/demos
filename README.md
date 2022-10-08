@@ -1,2 +1,2 @@
 # demos
-Dump repo for all random demo code
+Dump repo for all random demo code.
